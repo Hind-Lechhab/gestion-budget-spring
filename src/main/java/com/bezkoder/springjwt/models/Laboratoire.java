@@ -11,9 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -22,26 +24,25 @@ public class Laboratoire {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
 	@Size(max = 60)
 	private String name;
 	
-	@NotBlank
 	@Size(max = 120)
 	private String adress;
 	
-	@NotBlank
 	@Size(max = 120)
 	private String phoneNumber;
 	
 	private Boolean isResponsable;
 	
-	@NotBlank
 	@Size(max = 120)
 	private String secteurActivite;
 	
-	@ManyToMany
+	@OneToMany(mappedBy = "laboratoire" , cascade = CascadeType.REMOVE) @JsonIgnore
 	List<User> listeUsers = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "laboratoire" , cascade = CascadeType.REMOVE) @JsonIgnore
+	List<Budget> listeBudgets = new ArrayList<>();
 
 	public Laboratoire(String name, String adress, String phoneNumber,String secteurActivite, Boolean isResponsable) {
 		super();

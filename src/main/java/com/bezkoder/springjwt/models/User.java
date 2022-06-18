@@ -1,5 +1,6 @@
 package com.bezkoder.springjwt.models;
 
+import java.util.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -62,8 +63,11 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
   
-  @ManyToMany(mappedBy = "listeUsers", fetch = FetchType.LAZY)
-  private Set<Laboratoire> laboratoires = new HashSet<>();
+  @ManyToOne
+  private Laboratoire laboratoire;
+  
+  @OneToMany(mappedBy = "employe")
+  private List<Employe_DR> emlpoye_dr =new ArrayList<>();
 
   public User(String username, String email, String password) {
     this.username = username;
