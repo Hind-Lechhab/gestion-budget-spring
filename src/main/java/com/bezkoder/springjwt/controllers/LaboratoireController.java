@@ -85,6 +85,7 @@ public class LaboratoireController {
 	@PostMapping(path ="/recupererMyLab")
 	@ResponseBody	
 	public Laboratoire recupererMyLab(@RequestBody User usr) {
+		System.out.println("mon user pour recuperer mylabo ==> "+ usr);
 		User us=userRepository.findByUsername(usr.getUsername()).get();
 		Laboratoire l=us.getLaboratoire();
 		return l;

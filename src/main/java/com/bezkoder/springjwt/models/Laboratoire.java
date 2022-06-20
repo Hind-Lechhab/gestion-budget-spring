@@ -41,7 +41,7 @@ public class Laboratoire {
 	@OneToMany(mappedBy = "laboratoire" , cascade = CascadeType.REMOVE) @JsonIgnore
 	List<User> listeUsers = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "laboratoire" , cascade = CascadeType.REMOVE) @JsonIgnore
+	@OneToMany(mappedBy = "laboratoire" , cascade = CascadeType.ALL) @JsonIgnore
 	List<Budget> listeBudgets = new ArrayList<>();
 
 	public Laboratoire(String name, String adress, String phoneNumber,String secteurActivite, Boolean isResponsable) {

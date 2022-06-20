@@ -27,6 +27,8 @@ public class BudgetController {
 	@Autowired
     BudgetRepository budgetRepository;
 	
+	@Autowired
+    LaboratoireRepository laboratoireRepository;
 	
 	@PostMapping(path = "/addBudget")
 	@ResponseBody	
@@ -64,11 +66,12 @@ public class BudgetController {
 		
 	}
 	
-	@PostMapping(path ="/budgetByAnnee")
+	@PostMapping(path ="/budgetByAnneeAndLabo")
 	@ResponseBody	
-	public Budget budgetByAnnee(@RequestBody Budget bdg) {
+	public Budget budgetByAnneeAndLabo(@RequestBody Budget bdg) {
 		System.out.println("valeur recupere ==> "+ bdg.getId());
-		return budgetRepository.findByAnnee(bdg.getAnnee());
+		Laboratoire lb= laboratoireRepository.findById(bdg.getLaboratoire().getId()).get();
+		return budgetRepository.findByAnneeAndLaboratoire(bdg.getAnnee(),lb);
 		
 	}
 	

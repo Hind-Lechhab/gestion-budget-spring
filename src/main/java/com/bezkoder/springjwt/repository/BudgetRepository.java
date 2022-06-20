@@ -13,7 +13,8 @@ import com.bezkoder.springjwt.models.User;
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, Integer> {
 
-	Budget findByAnneeAndLaboratoire(String annee,Laboratoire l);
+	//@Query(value="SELECT * FROM budget b where b.laboratoire_id=?1 and b.annee=?2",nativeQuery=true)
+	Budget findByAnneeAndLaboratoire(String annee,Laboratoire lab);
 	
 	@Query(value="SELECT b.annee,l.name ,b.somme,b.somme_db,b.somme_dr,b.id FROM budget b , laboratoire l where b.laboratoire_id=l.id",nativeQuery=true)
 	List<Object[]> listerBudget();

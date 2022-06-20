@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity  @NoArgsConstructor @ToString
+@Entity @Data @NoArgsConstructor @ToString
 public class Employe_DR {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;	
