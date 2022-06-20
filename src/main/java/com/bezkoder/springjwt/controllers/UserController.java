@@ -51,7 +51,7 @@ public class UserController {
 	
 	@PostMapping("/addEmployee")
 	@ResponseBody
-	public ResponseEntity<?> createResponsable(@RequestBody User user) {
+	public ResponseEntity<?> createEmployee(@RequestBody User user) {
 
 		if (userRepository.existsByUsername(user.getUsername())) {
 		      return ResponseEntity
@@ -81,6 +81,39 @@ public class UserController {
 		userService.createNewResponsable(user);
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}	
+	
+	@PostMapping("/addResponsable")
+	@ResponseBody
+	public ResponseEntity<?> createResponsable(@RequestBody User user) {
+
+		if (userRepository.existsByUsername(user.getUsername())) {
+		      return ResponseEntity
+		          .badRequest()
+		          .body(new MessageResponse("Error: Username is already taken!"));
+	    }
+
+	    if (userRepository.existsByEmail(user.getEmail())) {
+	      return ResponseEntity
+	          .badRequest()
+	          .body(new MessageResponse("Error: Email is already in use!"));
+	    }
+		user.setPassword(getEncodedPassword(user.getCin()));
+		//user.getRoles().add(new Role(ERole.ROLE_RESPONSABLE));
+		//Set<Role> strRoles = user.getRoles();
+		Set<Role> roles = new HashSet<>();
+		
+	    Role userRole = roleRepository.findByName(ERole.ROLE_RESPONSABLE)
+	          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+	    roles.add(userRole);
+	    
+		Laboratoire l=laboratoireRepository.findById(user.getLaboratoire().getId()).get();
+		l.setIsResponsable(true);
+		laboratoireRepository.save(l);
+		
+		user.setRoles(roles);
+		userService.createNewResponsable(user);
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
 //	public User createResponsable(@RequestBody User user) {
 //		user.setPassword(getEncodedPassword(user.getCin()));
 //		Laboratoire l=laboratoireRepository.findById(user.getLaboratoire().getId()).get();
