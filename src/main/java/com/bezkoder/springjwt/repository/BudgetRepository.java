@@ -17,5 +17,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Integer> {
 	
 	@Query(value="SELECT b.annee,l.name ,b.somme,b.somme_db,b.somme_dr,b.id FROM budget b , laboratoire l where b.laboratoire_id=l.id",nativeQuery=true)
 	List<Object[]> listerBudget();
+
+	Budget findByAnnee(String annee);
 	
 }

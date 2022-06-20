@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bezkoder.springjwt.models.Laboratoire;
 import com.bezkoder.springjwt.models.User;
 import com.bezkoder.springjwt.repository.LaboratoireRepository;
+import com.bezkoder.springjwt.repository.UserRepository;
 import com.bezkoder.springjwt.security.services.LaboratoireService;
 
 import java.util.List;
@@ -33,6 +34,10 @@ public class LaboratoireController {
 	
 	@Autowired
     LaboratoireRepository laboratoireRepository;
+	
+
+	@Autowired
+    UserRepository userRepository;
 	
 	
 	@PostMapping(path = "/addLaboratoire")
@@ -68,6 +73,24 @@ public class LaboratoireController {
 		return laboratoireRepository.findById(lab.getId()).get();
 		
 	}
+	
+	@PostMapping(path ="/recupererLabByRespo")
+	@ResponseBody	
+	public List<Laboratoire> recupererLabByRespo(@RequestBody Laboratoire lab) {
+		System.out.println("valeur recupere lab by respo ==> "+ lab.getId());
+		return laboratoireRepository.listLaboByRespo(lab.getId());
+		
+	}
+	
+	@PostMapping(path ="/recupererMyLab")
+	@ResponseBody	
+	public Laboratoire recupererMyLab(@RequestBody User usr) {
+		User us=userRepository.findByUsername(usr.getUsername()).get();
+		Laboratoire l=us.getLaboratoire();
+		return l;
+		
+	}
+	
 	
 	@GetMapping("/listerLabo")
 	public List<Laboratoire> listerLabo() {

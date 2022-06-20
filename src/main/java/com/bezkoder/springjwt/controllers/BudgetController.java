@@ -63,7 +63,14 @@ public class BudgetController {
 		return budgetRepository.findById(bdg.getId()).get();
 		
 	}
+	
+	@PostMapping(path ="/budgetByAnnee")
+	@ResponseBody	
+	public Budget budgetByAnnee(@RequestBody Budget bdg) {
+		System.out.println("valeur recupere ==> "+ bdg.getId());
+		return budgetRepository.findByAnnee(bdg.getAnnee());
 		
+	}
 	
 	@PostMapping(path = "/updateBudget")
 	@ResponseBody	
