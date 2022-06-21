@@ -14,13 +14,14 @@ import com.bezkoder.springjwt.repository.TypeReopository;
 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/api/auth")
 public class TypeController {
 	@Autowired
 	TypeReopository typeReopository;
 	
 	@GetMapping("/listerType")
 	public List<Type> listerType() {
+		//System.out.println(typeReopository.findAll());
 		return typeReopository.findAll();
 	}
 }
